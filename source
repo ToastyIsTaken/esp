@@ -26,7 +26,8 @@ end)
 while task.wait() do
 	local plr = game.Players.LocalPlayer
 	for _, v in pairs(game.Players:GetPlayers()) do
-		if v ~= plr and v.Character then
+		--if v ~= plr and v.Character then
+		if v ~= v.Character then
 			local char = v.Character
 			local hasESP = false
 			local toolName = "None"
@@ -36,14 +37,12 @@ while task.wait() do
 				if child:IsA("Highlight") then
 					hasESP = true
 					highlight = child
-					break
 				end
 			end
 			
 			for _, child in ipairs(char:GetChildren()) do
 				if child:IsA("Tool") then
 					toolName = child.Name
-					break
 				end
 			end
 
@@ -84,13 +83,14 @@ while task.wait() do
 				textLabel2.BackgroundColor3 = Color3.new(255, 255, 255)
 				textLabel2.Parent = frameTool
 			end
-
+			
+			char.Head.Health.Frame.TextLabel.Text = "Health: " .. char.Humanoid.Health
+			char.Head.Tool.Frame.TextLabel.Text = "Tool: " .. toolName
+			
 			if highlight then
 				highlight.Enabled = espToggle
 				char.Head.Health.Enabled = infoToggle
 				char.Head.Tool.Enabled = infoToggle
-				char.Head.Health.Frame.TextLabel.Text = "Health: " .. char.Humanoid.Health
-				char.Head.Tool.Frame.TextLabel.Text = "Tool: " .. toolName
 			end
 		end
 	end
