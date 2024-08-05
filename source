@@ -49,15 +49,19 @@ while task.wait() do
 				local highlight = Instance.new("Highlight")
 				highlight.Parent = char
 				highlight.FillTransparency = 1
+				
 				local health = Instance.new("BillboardGui")
 				health.Name = "Health"
 				health.Size = UDim2.new(5, 0, 0.5, 0)
 				health.SizeOffset = Vector2.new(0, 2.5)
 				health.AlwaysOnTop = true
 				health.Parent = char.Head
+				
 				local frameHealth = Instance.new("Frame")
 				frameHealth.Size = UDim2.new(1, 0, 1, 0)
+				frameHealth.BackgroundTransparency = 1
 				frameHealth.Parent = health
+				
 				local textLabel1 = Instance.new("TextLabel")
 				textLabel1.Size = UDim2.new(1, 0, 1, 0)
 				textLabel1.TextScaled = true
@@ -65,15 +69,23 @@ while task.wait() do
 				textLabel1.TextColor3 = Color3.new(0, 0, 0)
 				textLabel1.BackgroundColor3 = Color3.new(255, 255, 255)
 				textLabel1.Parent = frameHealth
+				
+				local uiCorner1 = Instance.new("UICorner")
+				uiCorner1.CornerRadius = UDim.new(16, 16)
+				uiCorner1.Parent = textLabel1
+				
 				local tool = Instance.new("BillboardGui")
 				tool.Name = "Tool"
 				tool.Size = UDim2.new(5, 0, 0.5, 0)
 				tool.SizeOffset = Vector2.new(0, 3.75)
 				tool.AlwaysOnTop = true
 				tool.Parent = char.Head
+				
 				local frameTool = Instance.new("Frame")
 				frameTool.Size = UDim2.new(1, 0, 1, 0)
+				frameTool.BackgroundTransparency = 1
 				frameTool.Parent = tool
+				
 				local textLabel2 = Instance.new("TextLabel")
 				textLabel2.Size = UDim2.new(1, 0, 1, 0)
 				textLabel2.TextScaled = true
@@ -81,6 +93,10 @@ while task.wait() do
 				textLabel2.TextColor3 = Color3.new(0, 0, 0)
 				textLabel2.BackgroundColor3 = Color3.new(255, 255, 255)
 				textLabel2.Parent = frameTool
+				
+				local uiCorner2 = Instance.new("UICorner")
+				uiCorner2.CornerRadius = UDim.new(16, 16)
+				uiCorner2.Parent = textLabel2
 			end
 			
 			char.Head.Health.Frame.TextLabel.Text = "Health: " .. char.Humanoid.Health
