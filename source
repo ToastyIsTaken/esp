@@ -1,0 +1,97 @@
+local uis = game:GetService("UserInputService")
+local espToggle = false
+local infoToggle = false
+local triggered = false
+local cd = 0.5
+local track = 0
+
+uis.InputBegan:Connect(function(input, gameProcessed)
+	local currentTime = tick()
+	if not gameProcessed and input.KeyCode == Enum.KeyCode.V then
+		if not triggered and (currentTime - track >= cd) then
+			espToggle = not espToggle
+			infoToggle = not infoToggle
+			triggered = true
+			track = currentTime
+		end
+	end
+end)
+
+uis.InputEnded:Connect(function(input)
+	if input.KeyCode == Enum.KeyCode.V then
+		triggered = false
+	end
+end)
+
+while task.wait() do
+	local plr = game.Players.LocalPlayer
+	for _, v in pairs(game.Players:GetPlayers()) do
+		if v ~= plr and v.Character then
+			local char = v.Character
+			local hasESP = false
+			local toolName = "None"
+			local highlight
+
+			for _, child in ipairs(char:GetChildren()) do
+				if child:IsA("Highlight") then
+					hasESP = true
+					highlight = child
+					break
+				end
+			end
+			
+			for _, child in ipairs(char:GetChildren()) do
+				if child:IsA("Tool") then
+					toolName = child.Name
+					break
+				end
+			end
+
+			if not hasESP then
+				local highlight = Instance.new("Highlight")
+				highlight.Parent = char
+				highlight.FillTransparency = 1
+				local health = Instance.new("BillboardGui")
+				health.Name = "Health"
+				health.Size = UDim2.new(5, 0, 0.5, 0)
+				health.SizeOffset = Vector2.new(0, 2.5)
+				health.AlwaysOnTop = true
+				health.Parent = char.Head
+				local frameHealth = Instance.new("Frame")
+				frameHealth.Size = UDim2.new(1, 0, 1, 0)
+				frameHealth.Parent = health
+				local textLabel1 = Instance.new("TextLabel")
+				textLabel1.Size = UDim2.new(1, 0, 1, 0)
+				textLabel1.TextScaled = true
+				textLabel1.Font = Enum.Font.RobotoMono
+				textLabel1.TextColor3 = Color3.new(0, 0, 0)
+				textLabel1.BackgroundColor3 = Color3.new(255, 255, 255)
+				textLabel1.Parent = frameHealth
+				local tool = Instance.new("BillboardGui")
+				tool.Name = "Tool"
+				tool.Size = UDim2.new(5, 0, 0.5, 0)
+				tool.SizeOffset = Vector2.new(0, 3.75)
+				tool.AlwaysOnTop = true
+				tool.Parent = char.Head
+				local frameTool = Instance.new("Frame")
+				frameTool.Size = UDim2.new(1, 0, 1, 0)
+				frameTool.Parent = tool
+				local textLabel2 = Instance.new("TextLabel")
+				textLabel2.Size = UDim2.new(1, 0, 1, 0)
+				textLabel2.TextScaled = true
+				textLabel2.Font = Enum.Font.RobotoMono
+				textLabel2.TextColor3 = Color3.new(0, 0, 0)
+				textLabel2.BackgroundColor3 = Color3.new(255, 255, 255)
+				textLabel2.Parent = frameTool
+			end
+
+			if highlight then
+				highlight.Enabled = espToggle
+				char.Head.Health.Enabled = infoToggle
+				char.Head.Tool.Enabled = infoToggle
+				char.Head.Health.Frame.TextLabel.Text = "Health: " .. char.Humanoid.Health
+				char.Head.Tool.Frame.TextLabel.Text = "Tool: " .. toolName
+			end
+		end
+	end
+end
