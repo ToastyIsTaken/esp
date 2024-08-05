@@ -26,8 +26,7 @@ end)
 while task.wait() do
 	local plr = game.Players.LocalPlayer
 	for _, v in pairs(game.Players:GetPlayers()) do
-		--if v ~= plr and v.Character then
-		if v ~= v.Character then
+		if v ~= plr and v.Character then
 			local char = v.Character
 			local hasESP = false
 			local toolName = "None"
